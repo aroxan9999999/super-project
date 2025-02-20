@@ -187,10 +187,3 @@ if SENTRY_SETTINGS.get("dsn") and not DEBUG:
     )
 
 
-CELERY_BEAT_SCHEDULE = {
-    'cleanup-outboxes-every-60-minutes': {
-        'task': 'users.tasks.process_expired_outboxes',
-        'schedule': 60 * 4,
-    },
-}
-
