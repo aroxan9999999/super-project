@@ -14,6 +14,24 @@ services:
       - app_static_files:/srv/app/static:rw
       - app_media_files:/srv/app/media:rw
       - .:/srv/app
+  celery_worker:
+    build: .
+    command: celery -A core worker --loglevel=info
+    depends_on:
+      - redis
+      - app
+    volumes:
+      - .:/srv/app
+
+  celery_beat:
+    build: .
+    command: celery -A core beat --loglevel=info
+    depends_on:
+      - redis
+      - app
+    volumes:
+      - .:/srv/app
+
   db:
     tty: true
     image: postgres:16-alpine
